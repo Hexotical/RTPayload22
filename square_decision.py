@@ -18,11 +18,6 @@ def gen_scale_factor(coordDict):
 
     scaleFactor = largeDist / smallDist
     return scaleFactor
-    # scaledCoords = {}
-    # for key in coordDict.keys():
-    #     scaledCoords[list(key)] = np.array([coordDict[key][0] * scaleFactor, coordDict[key][1] * scaleFactor])
-    
-    # return scaledCoords
 
 def gen_theta(fixedCoords):
     largerCoords = list(fixedCoords.keys())
@@ -37,14 +32,10 @@ def gen_transform_matrix(translate_x=0, translate_y=0, theta=0, scale_factor=1, 
     translate_matrix_2 = np.matrix([[1, 0, translate_x_large], [0, 1, translate_y_large], [0, 0, 1]])
 
     #scale, rotate, translate but in reverse so translate, rotate, scale is the order to multiply
-
-    #transform_matrix = np.matmul(translate_matrix_2, translate_matrix)
     transform_matrix = translate_matrix
-    #transform_matrix = np.matmul(rotation_matrix, transform_matrix)
     transform_matrix = np.matmul(scale_matrix, transform_matrix)
     transform_matrix = np.matmul(rotation_matrix, transform_matrix)
 
-    #print("\nTransform matrix before multiplying by scale: ", transform_matrix, "\n")
     return np.matmul(translate_matrix_2, transform_matrix)
 
 def gen_aggregate_matrix( toMap, local):
